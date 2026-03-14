@@ -2,6 +2,6 @@
   "name": "lock-cat",
   "version": "1.0.0",
   "scripts": {
-    "build": "rm -rf public && mkdir -p public && cp -a index.html public/ && cp -a fonts public/ || true && cp -a pgp public/ || true"
+    "build": "rm -rf dist && mkdir -p dist && cp -a public/. dist/"
   }
 }
