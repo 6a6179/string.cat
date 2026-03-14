@@ -59,14 +59,19 @@
     html,
     body {
       margin: 0;
-      min-height: 100%;
+      height: 100%;
       background: var(--bg);
       color: var(--text);
     }
 
     body {
+      --pad-top: 28px;
+      --pad-bottom: 36px;
+
       font: 15.5px/1.6 var(--font);
-      padding: 28px 18px 36px;
+      height: 100dvh;
+      padding: var(--pad-top) 18px var(--pad-bottom);
+      overflow: hidden;
     }
 
     a {
@@ -91,10 +96,10 @@
 
     .page {
       width: min(100%, var(--maxw));
-      min-height: calc(100dvh - 64px);
+      height: calc(100dvh - var(--pad-top) - var(--pad-bottom));
       margin: 0 auto;
       display: grid;
-      grid-template-rows: auto 1fr auto;
+      grid-template-rows: auto minmax(0, 1fr) auto;
       gap: 18px;
     }
 
@@ -125,6 +130,7 @@
 
     .shell {
       min-height: 0;
+      height: 100%;
       display: flex;
       flex-direction: column;
       border: 1px solid var(--line-strong);
@@ -170,9 +176,10 @@
     }
 
     .shell-body {
+      flex: 1 1 auto;
       min-height: 0;
-      flex: 1;
-      overflow: auto;
+      overflow-y: auto;
+      overflow-x: hidden;
       padding: 1rem;
       scrollbar-width: thin;
       scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
@@ -302,11 +309,13 @@
 
     @media (max-width: 520px) {
       body {
-        padding: 18px 14px 24px;
+        --pad-top: 18px;
+        --pad-bottom: 24px;
+        padding: var(--pad-top) 14px var(--pad-bottom);
       }
 
       .page {
-        min-height: calc(100dvh - 42px);
+        height: calc(100dvh - var(--pad-top) - var(--pad-bottom));
         gap: 14px;
       }
 
@@ -365,7 +374,7 @@
     </section>
 
     <footer class="footer">
-      © 2026 string.cat
+      © <span id="year"></span> string.cat
     </footer>
   </main>
 
@@ -377,6 +386,8 @@
       const history = $("#history");
       const form = $("#command-form");
       const input = $("#command-input");
+
+      $("#year").textContent = new Date().getFullYear();
 
       const state = {
         commandHistory: [],
